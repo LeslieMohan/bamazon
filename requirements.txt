@@ -1,0 +1,14 @@
+amazon-like storefront 
+
+products:
+
+skates
+hammer
+notebook
+blouse
+Neo-Citron
+sandals
+iphone
+fridge
+coat
+stroller
