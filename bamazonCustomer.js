@@ -5,84 +5,57 @@ var command = process.argv[2];
 var inquirer = require('inquirer');
 
 var connection = db.login();
+
 connection.connect(function(err) {
     if (err) {
         throw err;
     }
     console.log("Done");
-    executeCommand(command, productsObj, connection, function() {
-        console.log("Done");
-    })
+    itemList();
 });
 
-//show products data and display in console
+function itemList() {
+
+    connection.query('SELECT * FROM products', function(err, res){
+
+        for (var i = 0; i < res.length; i++) {
+            console.log(res[i].product_name);
+        }
+
+        customerChoice();
+
+}) 
+        
+};
+
+
 
 
 // prompt for info about the item being ordered
 function customerChoice() {
-    inquirer.prompt({
-          
+    inquirer.prompt([
+        {  
         name: "action",
-        type: "rawlist",
-        message: "What product would you like to order?",
-        choices: [
-          "skates",
-          "hammer",
-          "notebook",
-          "blouse",
-          "Neo-Citron",
-          "sandals",
-          "iphone",
-          "fridge",
-          "coat",
-          "stroller"
-        ]},
+        type: "input",
+        message: "What is the ID of the product would you like to order?",
+
+        },
 
         {
-        name: "action",
-        type: "rawlist",
-        message: "How many would you like to order?"
+        name: "quantity",
+        type: "input",
+        message: "How many units of the product would you like to buy?"
 
         }
 
-    ).then(function(answer) {
-        var query = "SELECT product_name from where ?";
-        connection.query(query, { product
-            _name: answer.product_name }, function(err, res) {
-        for (var i = 0; i < products.length; i++) {
-          console.log(");
+    ]).then(function(answer) {
+        console.log(answer)
+        var query = "SELECT * FROM products where product_name = ?";
+        connection.query(query, [ answer.action ], function(err, res) {
+            console.log(res);
         });
-        customerChoice();
       });
-    });
+    };
 
-        function(err) {
-            if (err) throw err;
-            console.log("");
-            // re-prompt the user if they want to order another item
-            start();
-        }
-};
-
-
-function executeCommand(command, productsObj, connection, callback)
-{
-    switch (command)
-    {
-        case "add": 
-            connection.query(`INSERT INTO products (product_name, department_name, price, stock_quantity) 
-            values (?, ?, ?, ?)`, [ 
-                productsObj.product_name, 
-                productsObj.department_name, 
-                productsObj.price, 
-                productsObj.stock_quantity ]);
-            break;
-        case "update": 
-            // do something
-            connection.query(`UPDATE FROM products WHERE stock_quantity = ?`);
-            break;
-    }
-
-    callback();
-}
+        
 
