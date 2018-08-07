@@ -3,7 +3,7 @@ This is an Amazon-like storefront using Node.js and MySQL. The app will take in 
 
 ## Live Demo
 
-<a href="https://youtu.be/9pNzye5gVYM" target="_blank" width="300" height="200"></a>
+[Bamazon video](https://youtu.be/9pNzye5gVYM)
 
 
 
