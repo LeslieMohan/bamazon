@@ -1,3 +1,4 @@
+//mysql connection
 var mysql = require("mysql");
 
 function login() {
